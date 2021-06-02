@@ -23,9 +23,9 @@ def expoTest(iterations, number):
     timeTaken = endTime - startTime
     avgCycleTime = sum(cycles) / len(cycles)
     print(f"\nCompleted: {per}% \nAvrage 1M cycle: {avgCycleTime} Sec \nTotal cycles: {iterations/1000000} \nTotal Time: {timeTaken.total_seconds()} Sec \nExponential: {val}")
-    file.write(f"\n# Started on: {datetime.now()} \n* Completed: {per}% \n* Avrage 1M cycle: {avgCycleTime} Sec \n* Total cycles: {iterations/1000000} \n* Total Time: {timeTaken.total_seconds()} Sec \n* Exponential: {val}\n")
+    file.write(f"\n# Started on: {datetime.now()} \n* Completed: {per}% \n* Avrage 1M cycle: {avgCycleTime} Sec \n* Total cycles: {int(iterations/1000000)} \n* Total Time: {timeTaken.total_seconds()} Sec \n* Exponential: {val}\n")
     file.close()
 
-it = 10# int(input("Set Cycles (each is 1M): "))
-num = 50# int(input("Exponantial of: "))
+it = int(input("Set Cycles (each is 1M): "))
+num = int(input("Exponantial of: "))
 expoTest(it*1000000, num)
