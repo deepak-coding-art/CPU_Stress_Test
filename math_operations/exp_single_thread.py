@@ -1,31 +1,44 @@
 import math
-from datetime import datetime
-file = open("./Tests.md", "a")
+from datetime import datetime as tim
 
-def expoTest(iterations, number):
-    counter = 0
-    per = 1
-    startTime = datetime.now()
-    lastTime = datetime.now()
-    cycles = []
-    for i in range(iterations):
-        val = math.exp(number)
-        if counter == int(iterations/100):
-            nowTime = datetime.now()
-            diff = nowTime - lastTime;
-            cycles.append(diff.total_seconds()) 
-            print(f"Running: {per}% {diff.total_seconds()} Sec")
-            counter = 0
-            per+=1
-            lastTime = nowTime
-        counter+=1
-    endTime = datetime.now()
-    timeTaken = endTime - startTime
-    avgCycleTime = sum(cycles) / len(cycles)
-    print(f"\nCompleted: {per}% \nAvrage 1M cycle: {avgCycleTime} Sec \nTotal cycles: {iterations/1000000} \nTotal Time: {timeTaken.total_seconds()} Sec \nExponential: {val}")
-    file.write(f"\n# Started on: {datetime.now()} \n* Completed: {per}% \n* Avrage 1M cycle: {avgCycleTime} Sec \n* Total cycles: {int(iterations/1000000)} \n* Total Time: {timeTaken.total_seconds()} Sec \n* Exponential: {val}\n")
+# Gratings
+print("CPU Stress Test")
+
+# Calculting Exponential function
+def calcExpo(iterations, number):
+    for _ in range(iterations):
+        math.exp(number)
+
+# Wite the results to file
+def writeTest(totalTime, averageTime, score, cycles):
+    file = open("./Tests.md", "a")
+    file.write(f"\n# Started on: {tim.now()}\n* Cycles {cycles}\n* All cycles compeleted in {totalTime}(S)\n* Average time: {averageTime}(S)\n* Score: {score}")
     file.close()
 
-it = int(input("Set Cycles (each is 1M): "))
-num = int(input("Exponantial of: "))
-expoTest(it*1000000, num)
+# Exponential test function
+def expoTest(cycles):
+    cycleSize = 1000000
+    expos = list(range(0, 600))
+    cycleDivs = cycleSize//len(expos)
+    cycleTimes = []
+    for cycle in range(cycles):
+        cycleStartTime = tim.now()
+        for expo in expos:
+            calcExpo(cycleDivs, expo)
+        cycleEndTime = tim.now()
+        cycleTimes.append((cycleEndTime - cycleStartTime).total_seconds())
+        print(f"{cycle} cycles compeleted {round(cycleTimes[cycle], 6)}(S)")
+    totalTime = sum(cycleTimes)
+    averageTime = sum(cycleTimes)/len(cycleTimes)
+    score = (1 / averageTime)*100
+    print(f"\nAll cycles compeleted in {totalTime}(S) \nAverag time: {averageTime}(S) \nScore: {score}")
+    writeTest(totalTime, averageTime, score, cycles)
+
+# Main loop
+while(True):
+    cycles = int(input("\nCycles(1M each): "))
+    print("Cycle started.\n")
+    expoTest(cycles)
+    again = input("\nPress N for exit, Press Enter for run gain: ")
+    if(again == 'N' or again == "n"):
+        break
