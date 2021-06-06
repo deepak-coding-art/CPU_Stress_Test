@@ -36,9 +36,11 @@ def expoTest(cycles):
 
 # Main loop
 while(True):
-    cycles = int(input("\nCycles(1M each): "))
-    print("Cycle started.\n")
-    expoTest(cycles)
-    again = input("\nPress N for exit, Press Enter for run gain: ")
-    if(again == 'N' or again == "n"):
-        break
+    try:
+        cycles = int(input("\n'0' for exit or Cycles(1M each): "))
+        if(cycles == 0):
+            break
+        print("Cycle started...,\nPress (Ctrl+c) for stop.\n")
+        expoTest(cycles)
+    except:
+        print("\nPlease input integer only...")
