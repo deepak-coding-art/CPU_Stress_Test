@@ -27,13 +27,15 @@ def expoTest(cycles):
             calcExpo(cycleDivs, expo)
         cycleEndTime = tim.now()
         cycleTimes.append((cycleEndTime - cycleStartTime).total_seconds())
-        print(f"{cycle} cycles compeleted {round(cycleTimes[cycle], 6)}(S)")
-    totalTime = sum(cycleTimes)
-    averageTime = sum(cycleTimes)/len(cycleTimes)
-    score = (1 / averageTime)*100
-    print(f"\nAll cycles compeleted in {totalTime}(S) \nAverag time: {averageTime}(S) \nScore: {score}")
-    writeTest(totalTime, averageTime, score, cycles)
-
+        compeletedCycles = cycle
+        print(f"{compeletedCycles} cycles compeleted {round(cycleTimes[cycle], 6)}(S)")
+    if(len(cycleTimes) != 0):
+        totalTime = sum(cycleTimes)
+        averageTime = sum(cycleTimes)/len(cycleTimes)
+        score = (1 / averageTime)*100
+        print(f"\n{len(cycleTimes)} cycles compeleted in {totalTime}(S) \nAverag time: {averageTime}(S) \nScore: {score}")
+        writeTest(totalTime, averageTime, score, len(cycleTimes))
+        
 # Main loop
 while(True):
     try:
